@@ -20,8 +20,17 @@
         </ul>
     </nav>
     <div class="container-fluid">
+        <div id="quote"></div>
     </div>
-    <script src="scripts/bundle.js"></script>
+    <template id="quote-template">
+        <blockquote>
+            {{quote}}
+            <footer>
+                - {{author}} <span id="more-info"><i class="fa fa-wikipedia"></i> <a href="{{wikipediaLink}}" target="_blank">(wiki)</a></span>
+            </footer>
+        </blockquote>
+    </template>
+    <script src="scripts/vendor.js"></script>
     <script src="scripts/main.js"></script>
 </body>
 
