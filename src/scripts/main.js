@@ -17,5 +17,13 @@ $(document).ready(() => {
             $('#quote').html(errorTemplate(error));
         });
 }
+}).ajaxStart(() => {
+    $('#loader').show();
+    $('#quote-button').hide();
+    $('#quote').hide();
+}).ajaxStop(() => {
+    $('#loader').hide();
+    $('#quote-button').show();
+    $('#quote').show();
 });
 
