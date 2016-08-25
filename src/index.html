@@ -21,14 +21,19 @@
     </nav>
     <div class="container-fluid">
         <div id="quote"></div>
+        <button class="btn btn-lg btn-success" id="quote-button">Get another quote</button>
     </div>
     <template id="quote-template">
         <blockquote>
-            {{quote}}
+            {{{quote}}}
             <footer>
-                - {{author}} <span id="more-info"><i class="fa fa-wikipedia"></i> <a href="{{wikipediaLink}}" target="_blank">(wiki)</a></span>
+                {{author}} <span id="more-info"> <a href="{{wikipediaLink}}" target="_blank"><i class="fa fa-wikipedia-w"></i></a></span>
+                <p>{{{description}}} &hellip;</p>
             </footer>
         </blockquote>
+    </template>
+    <template id="error-template">
+        <h1>Cannot get data from server: {{statusText}}</h1>
     </template>
     <script src="scripts/vendor.js"></script>
     <script src="scripts/main.js"></script>
