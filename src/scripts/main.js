@@ -5,7 +5,7 @@ $(document).ready(() => {
     const quoteTemplate = handlebars.compile($('#quote-template').html()),
         errorTemplate = handlebars.compile($('#error-template').html());
     $('#quote-button').on('click', getData);
-
+    getData();
     function getData(event) {
         if(event) {
             event.preventDefault();
