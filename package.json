@@ -2,24 +2,25 @@
   "name": "quoteViewer",
   "version": "1.0.0",
   "description": "A remake of my quote generator app",
-  "main": "dist/index.html",
   "scripts": {
     "server": "browser-sync start -s 'dist' -f 'dist'",
     "cleanup": "rm -rf dist/*",
     "setupfolder": "mkdir -p dist/scripts dist/css dist/images",
-    "test": "babel-node src/tests/*.js | (faucet || true) && echo ------------- ",
+    "test": "babel-node tests/*.js | (faucet || exit 0) && echo ------------- ",
+    "concat:scripts": "cat node_modules/bootstrap/dist/css/bootstrap.min.css | cleancss -o dist/css/bundle.css",
+    "copy:maps": "cp node_modules/bootstrap/dist/css/bootstrap.min.css.map dist/css/bootstrap.min.css.map",
     "build:html": "cp -r src/index.html dist/",
     "build:scripts": "browserify -x jquery -x bootstrap -x handlebars src/scripts/*.js -t [ babelify --presets [ es2015 ] ] -o dist/scripts/main.js",
     "build:images": "cp -rf src/images/* dist/images/",
-    "build:vendor": "browserify -r jquery -r bootstrap -r handlebars -t [ babelify ] -o dist/scripts/vendor.js && cat node_modules/bootstrap/dist/css/bootstrap.min.css | cleancss -o dist/css/bundle.css && cp node_modules/bootstrap/dist/css/bootstrap.min.css.map dist/css/bootstrap.min.css.map",
+    "build:vendor": "browserify -r jquery -r bootstrap -r handlebars -t [ babelify ] -o dist/scripts/vendor.js && npm run concat:scripts && npm run copy:maps",
     "build:styles": "node-sass --output-style compressed --source-map=true -o dist/css src/styles",
-    "watch:html": "onchange src/**/*.html -- npm run build:html",
-    "watch:js": "onchange src/**/*.js -e src/test/**/*.js -- npm run build:scripts",
-    "watch:styles": "onchange src/styles/*.scss -- npm run build:styles",
-    "test:watch": "onchange src/**/*.js -- npm run test",
-    "build": "npm run cleanup && npm run setupfolder && npm run build:vendor && npm run build:html && npm run build:scripts && npm run build:styles",
+    "watch:html": "onchange src/**/*.html -i -- npm run build:html",
+    "watch:js": "onchange src/**/*.js -e src/test/**/*.js -i -- npm run build:scripts",
+    "watch:styles": "onchange src/styles/*.scss -i -- npm run build:styles",
+    "test:watch": "onchange src/**/*.js -i -- npm run test",
+    "build": "npm run cleanup && npm run setupfolder && npm run build:vendor",
     "start": "npm run build && run-p watch:* -s server",
-    "start:testing": "npm test && npm run test:watch -s"
+    "start:testing": "npm run test:watch -s"
   },
   "repository": {
     "type": "git",
@@ -42,7 +43,8 @@
     "node-sass": "^3.8.0",
     "npm-run-all": "^2.3.0",
     "onchange": "^2.5.0",
-    "tape": "^4.6.0"
+    "tape": "^4.6.0",
+    "tape-catch": "^1.0.6"
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
