@@ -11,7 +11,7 @@ $(document).ready(() => {
             event.preventDefault();
         }
 
-        $.get('http://localhost:9000/quote').then(data => {
+        $.get('https://api.gregoftheweb.com/quote').then(data => {
             $('#quote').html(quoteTemplate(data));
         }).catch(error => {
             $('#quote').html(errorTemplate(error));
